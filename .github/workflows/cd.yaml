@@ -30,7 +30,7 @@ jobs:
     needs: [build-distrod_wsl_launcher, bump-version]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: ${{ needs.bump-version.outputs.tag }}
 
@@ -39,13 +39,13 @@ jobs:
           echo "ARCH_NAME=$(uname -m)" >> $GITHUB_ENV
 
       - name: Download opt_distrod
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: "opt_distrod-${{ env.ARCH_NAME }}"
           path: assets
 
       - name: Download distrod_wsl_launcher
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: "distrod_wsl_launcher-${{ env.ARCH_NAME }}"
           path: "distrod_wsl_launcher-${{ env.ARCH_NAME }}"
@@ -80,11 +80,11 @@ jobs:
         shell: bash
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: ${{ needs.bump-version.outputs.tag }}
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: |
             ~/.cargo/registry
@@ -98,7 +98,7 @@ jobs:
           echo "ARCH_NAME=$(uname -m)" >> $GITHUB_ENV
 
       - name: Download the Distrod's rootfs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: "distrod_root-${{ env.ARCH_NAME }}"
           path: rootfs
@@ -107,7 +107,7 @@ jobs:
         run: make -f windows.mk ROOTFS_PATH=rootfs/distrod_root.tar.gz distrod_wsl_launcher
 
       - name: Upload for the assets
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: "distrod_wsl_launcher-${{ env.ARCH_NAME }}"
           path: distrod/target/release/distrod_wsl_launcher.exe
@@ -120,11 +120,11 @@ jobs:
     needs: [build-portproxy-exe, bump-version]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: ${{ needs.bump-version.outputs.tag }}
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: |
             ~/.cargo/registry
@@ -138,7 +138,7 @@ jobs:
           echo "ARCH_NAME=$(uname -m)" >> $GITHUB_ENV
 
       - name: Download portproxy.exe
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: "portproxy-${{ env.ARCH_NAME }}"
           path: distrod/target/release
@@ -158,14 +158,14 @@ jobs:
         run: make OUTPUT_ROOTFS_PATH=distrod_root.tar.gz rootfs
 
       - name: Upload opt_distrod.tar.gz for the assets
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: "opt_distrod-${{ env.ARCH_NAME }}"
           path: opt_distrod.tar.gz
           if-no-files-found: error
 
       - name: Upload distrod_root.tar.gz for the Windows build
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: "distrod_root-${{ env.ARCH_NAME }}"
           path: distrod_root.tar.gz
@@ -179,7 +179,7 @@ jobs:
       clean_changelog: ${{ steps.changelog.outputs.clean_changelog }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Conventional Changelog Action
         id: changelog
         uses: TriPSs/conventional-changelog-action@v3
@@ -204,8 +204,8 @@ jobs:
         shell: bash
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
         with:
           path: |
             ~/.cargo/registry
@@ -222,7 +222,7 @@ jobs:
         run: make -f windows.mk portproxy.exe
 
       - name: Upload portproxy.exe for the Linux build
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: "portproxy-${{ env.ARCH_NAME }}"
           path: distrod/target/release/portproxy.exe
