@@ -6,7 +6,7 @@ use anyhow::{anyhow, bail, Context, Result};
 use async_trait::async_trait;
 use chrono::NaiveDateTime;
 
-static LINUX_CONTAINERS_ORG_BASE: &str = "https://images.linuxcontainers.org/";
+static LINUX_CONTAINERS_ORG_BASE: &str = "https://images.lxd.canonical.com/";
 
 pub async fn fetch_container_org_image(choose_from_list: ListChooseFn<'_>) -> Result<DistroImage> {
     let mut distro_image_list = Box::new(ContainerOrgImageList {}) as Box<dyn DistroImageFetcher>;
