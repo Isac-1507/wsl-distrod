@@ -39,13 +39,13 @@ jobs:
           echo "ARCH_NAME=$(uname -m)" >> $GITHUB_ENV
 
       - name: Download opt_distrod
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: "opt_distrod-${{ env.ARCH_NAME }}"
           path: assets
 
       - name: Download distrod_wsl_launcher
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: "distrod_wsl_launcher-${{ env.ARCH_NAME }}"
           path: "distrod_wsl_launcher-${{ env.ARCH_NAME }}"
@@ -98,7 +98,7 @@ jobs:
           echo "ARCH_NAME=$(uname -m)" >> $GITHUB_ENV
 
       - name: Download the Distrod's rootfs
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: "distrod_root-${{ env.ARCH_NAME }}"
           path: rootfs
@@ -107,7 +107,7 @@ jobs:
         run: make -f windows.mk ROOTFS_PATH=rootfs/distrod_root.tar.gz distrod_wsl_launcher
 
       - name: Upload for the assets
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: "distrod_wsl_launcher-${{ env.ARCH_NAME }}"
           path: distrod/target/release/distrod_wsl_launcher.exe
